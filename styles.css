@@ -74,4 +74,8 @@ body {
         height: 70px; /* 100px의 30% 축소 */
         border-radius: 7px; /* 10px의 30% 축소 */
     }
+
+    body {
+        background-color: #f0f0f0;
+    }
 }
