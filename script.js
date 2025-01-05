@@ -7,10 +7,26 @@ const cardImages = [
     'B6.png', 'B6.png'
 ];
 
+const newCardImages = [
+    'B1.png', 'B1.png',
+    'B2.png', 'B2.png',
+    'B3.png', 'B3.png',
+    'B4.png', 'B4.png',
+    'B5.png', 'B5.png',
+    'B6.png', 'B6.png',
+    'G1.png', 'G1.png',
+    'G2.png', 'G2.png',
+    'G3.png', 'G3.png',
+    'G4.png', 'G4.png',
+    'G5.png', 'G5.png',
+    'G6.png', 'G6.png'
+];
+
 const gameBoard = document.getElementById('game-board');
 let firstCard, secondCard;
 let lockBoard = false;
 let matchcount = 0;
+let round = 1;
 
 // 카드 섞기
 function shuffle(array) {
@@ -22,8 +38,8 @@ function shuffle(array) {
 }
 
 // 카드 생성
-function createCards() {
-    const shuffledCards = shuffle(cardImages);
+function createCards(cardsets) {
+    const shuffledCards = shuffle(cardsets);
     shuffledCards.forEach(imageUrl => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -98,10 +114,19 @@ function resetBoard() {
 
 // 게임 종료 확인
 function checkGameOver() {
-    if (matchcount === cardImages.length/2) {
-        setTimeout(() => {
-            showMessage("Very Good✨");
-        }, 1000);
+    if (round === 1) {
+        if (matchcount === cardImages.length / 2) {
+            setTimeout(() => {
+                resetGame();
+            }, 1000);
+        }
+    }
+    else if (round === 2) {
+        if (matchcount === newCardImages.length / 2) {
+            setTimeout(() => {
+                showMessage("Very Good✨");
+            }, 1000);
+        }
     }
 }
 
@@ -118,5 +143,20 @@ function showMessage(message) {
     document.body.appendChild(messageDiv);
 }
 
+// 게임 리셋 함수
+function resetGame() {
+    // 보드를 초기화
+    gameBoard.innerHTML = '';
+    matchcount = 0;
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+    matchcount = 0;
+    round = 2;
+
+    // 새로운 스테이지 카드 생성
+    createCards(newCardImages);
+}
+
 // 게임 시작
-createCards();
+createCards(cardImages);
